@@ -1,4 +1,6 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿var root = Directory.GetCurrentDirectory();
+bullhorn.DotEnv.Load(Path.Combine(root, ".env"));
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -15,6 +17,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseWebSockets();
 

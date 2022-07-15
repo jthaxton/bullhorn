@@ -1,4 +1,4 @@
 ﻿<Properties StartupConfiguration="{F7F24C42-9CF5-471D-B240-77A7A51E0C3C}|Default">
-  <MonoDevelop.Ide.ItemProperties.bullhorn FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.bullhorn PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MultiItemStartupConfigurations />
 </Properties>
