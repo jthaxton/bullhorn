@@ -5,24 +5,18 @@ using System.Text;
 using Newtonsoft.Json;
 using bullhorn.Models;
 using System.Text.Json;
+using System.Collections.Concurrent;
 
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly ILogger<WeatherForecastController> _logger;
-    private Dictionary<string, Queue<object>> _cookieJar;
-    private Dictionary<string, System.Net.WebSockets.WebSocket> _socketJar;
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    private ConcurrentDictionary<string, System.Net.WebSockets.WebSocket> _socketJar;
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, ConcurrentDictionary<string, System.Net.WebSockets.WebSocket> socketJar)
     {
         _logger = logger;
-        _cookieJar = new Dictionary<string, Queue<object>>();
-        _socketJar = new Dictionary<string, System.Net.WebSockets.WebSocket>();
+        _socketJar = socketJar;
     }
 
     [HttpPost("/addNotification")]
@@ -34,16 +28,16 @@ public class WeatherForecastController : ControllerBase
 
         if (deserializedBody == null)
         {
-            _logger.LogInformation(deserializedBody.ToString());
             _logger.LogInformation("to_cookies is undefined. Exiting.");
             return;
         }
 
-        _logger.LogInformation(deserializedBody.PushToCookies.ToString());
-        foreach(string cookie in deserializedBody.PushToCookies ) {
-
+        //_logger.LogInformation(_socketJar.Keys.First<string>().ToString());
+        foreach (string cookie in deserializedBody.PushToCookies ) {
             if (_socketJar.ContainsKey(cookie))
             {
+            _logger.LogInformation("FOUND COOKIE");
+                _logger.LogInformation(deserializedBody.Meta.ToString());
                 var webSocket = _socketJar[cookie];
                 var fulfillment = new Fulfillment(
                     resourceType: "testType",
@@ -51,6 +45,7 @@ public class WeatherForecastController : ControllerBase
                 );
 
                 var serializedFulfillment = ExtendedSerializerExtensions.Serialize(fulfillment);
+                _logger.LogInformation(serializedFulfillment.ToString());
                 await webSocket.SendAsync(
                     new ArraySegment<byte>(serializedFulfillment, 0, 1024 * 4),
                     0,
@@ -61,13 +56,12 @@ public class WeatherForecastController : ControllerBase
             }
 
         };
-        await HttpContext.Response.WriteAsJsonAsync("success");
+        await HttpContext.Response.WriteAsJsonAsync(_socketJar.Keys.First<string>().ToString());
     }
 
     [HttpGet("/getregister")]
     public async Task? GetRegister()
     {
-        //var ser = JsonConvert.SerializeObject(_cookieJar);
         var sub = new Order(actionType: "subscribe", fromCookie: "c00k!3", resourceType: null, pushToCookies: null, meta: null);
         await HttpContext.Response.WriteAsJsonAsync(sub);
     }
@@ -97,14 +91,15 @@ public class WeatherForecastController : ControllerBase
         {
             var inputStream = new MemoryStream(buffer);
             var deserialized = ExtendedSerializerExtensions.DeserializeFromStream<Order>(inputStream);
-            var toCookie = deserialized.FromCookie;
-            if (toCookie != null && !_socketJar.ContainsKey(toCookie))
+            var fromCookie = deserialized.FromCookie;
+            if (fromCookie != null && !_socketJar.ContainsKey(fromCookie))
             {
-                _socketJar[toCookie] = webSocket;
+                _socketJar[fromCookie] = webSocket;
             }
             _logger.LogInformation(deserialized.ToString());
+            _logger.LogInformation(_socketJar.Keys.First<string>().ToString());
         }
-
+        _logger.LogInformation(_socketJar.Keys.First<string>());
         while (!receiveResult.CloseStatus.HasValue)
         {
 
