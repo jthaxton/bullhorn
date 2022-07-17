@@ -1,5 +1,5 @@
 # Bullhorn
-A general purpose websocket microservice
+A general purpose websocket microservice.
 
 ## Prerequisites
 * C#

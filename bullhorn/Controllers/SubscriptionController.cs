@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections;
 namespace bullhorn.Controllers;
-using System.Text;
-using Newtonsoft.Json;
 using bullhorn.Models;
-using System.Text.Json;
 using System.Collections.Concurrent;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class SubscriptionController : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<SubscriptionController> _logger;
     private ConcurrentDictionary<string, System.Net.WebSockets.WebSocket> _socketJar;
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, ConcurrentDictionary<string, System.Net.WebSockets.WebSocket> socketJar)
+    public SubscriptionController(ILogger<SubscriptionController> logger, ConcurrentDictionary<string, System.Net.WebSockets.WebSocket> socketJar)
     {
         _logger = logger;
         _socketJar = socketJar;
@@ -32,7 +28,6 @@ public class WeatherForecastController : ControllerBase
             return;
         }
 
-        //_logger.LogInformation(_socketJar.Keys.First<string>().ToString());
         foreach (string cookie in deserializedBody.PushToCookies ) {
             if (_socketJar.ContainsKey(cookie))
             {
@@ -68,7 +63,6 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("/wssubscribe")]
     public async Task SubscribeClient()
     {
-        //_logger.LogInformation(HttpContext.Request.Body.ToString());
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
             using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();

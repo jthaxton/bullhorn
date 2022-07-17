@@ -3,16 +3,7 @@ using Newtonsoft.Json;
 
 namespace bullhorn.Models
 {
-    //interface IOrder
-    //{
-    //    public string ActionType { get; set; }
-    //    public string FromCookie { get; set; }
-    //    public string? ResourceType { get; set; }
-    //    public string[]? PushToCookies { get; set; }
-    //}
-
     [JsonObject(MemberSerialization.OptOut)]
-
     public class Order
     {
         public string ActionType { get; set; }

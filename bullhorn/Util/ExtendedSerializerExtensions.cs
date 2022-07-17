@@ -32,7 +32,6 @@ namespace bullhorn
             using (var jsonTextReader = new JsonTextReader(sr))
             {
                 return serializer.Deserialize<T>(jsonTextReader);
-                //return serializer.Deserialize(jsonTextReader);
             }
         }
 
@@ -59,11 +58,5 @@ namespace bullhorn
             );
         }
     }
-    //    public static async Task<Dictionary<string, string>> DeserializeBody(HttpRequest req)
-    //    {
-    //        var deserialized = DeserializeFromStream(req.Body).ToString();
-    //        return DeserializeJson(deserialized).Result;
-    //    }
-    //}
 }
 
