@@ -36,12 +36,10 @@ public class WeatherForecastController : ControllerBase
         foreach (string cookie in deserializedBody.PushToCookies ) {
             if (_socketJar.ContainsKey(cookie))
             {
-            _logger.LogInformation("FOUND COOKIE");
-                _logger.LogInformation(deserializedBody.Meta.ToString());
                 var webSocket = _socketJar[cookie];
                 var fulfillment = new Fulfillment(
-                    resourceType: "testType",
-                    meta: deserializedBody.Meta
+                    resourceType: deserializedBody.ResourceType,
+                    meta: deserializedBody.Meta.ToString()
                 );
 
                 var serializedFulfillment = ExtendedSerializerExtensions.Serialize(fulfillment);
@@ -85,9 +83,10 @@ public class WeatherForecastController : ControllerBase
     private async Task Listen(System.Net.WebSockets.WebSocket webSocket)
     {
         var buffer = new byte[1024 * 4];
-        var receiveResult = await webSocket.ReceiveAsync(
+        System.Net.WebSockets.WebSocketReceiveResult? useReceiveResult;
+        useReceiveResult = await webSocket.ReceiveAsync(
             new ArraySegment<byte>(buffer), CancellationToken.None);
-        if (receiveResult != null && buffer != null)
+        if (useReceiveResult != null && buffer != null)
         {
             var inputStream = new MemoryStream(buffer);
             var deserialized = ExtendedSerializerExtensions.DeserializeFromStream<Order>(inputStream);
@@ -98,16 +97,19 @@ public class WeatherForecastController : ControllerBase
             }
             _logger.LogInformation(deserialized.ToString());
             _logger.LogInformation(_socketJar.Keys.First<string>().ToString());
+            var useWebsocket = _socketJar[fromCookie];
+            useReceiveResult = await useWebsocket.ReceiveAsync(
+            new ArraySegment<byte>(buffer), CancellationToken.None);
         }
         _logger.LogInformation(_socketJar.Keys.First<string>());
-        while (!receiveResult.CloseStatus.HasValue)
+        while (!useReceiveResult.CloseStatus.HasValue)
         {
 
         }
 
         await webSocket.CloseAsync(
-            receiveResult.CloseStatus.Value,
-            receiveResult.CloseStatusDescription,
+            useReceiveResult.CloseStatus.Value,
+            useReceiveResult.CloseStatusDescription,
             CancellationToken.None);
     }
 }

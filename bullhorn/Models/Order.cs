@@ -19,13 +19,13 @@ namespace bullhorn.Models
         public string FromCookie { get; set; }
         public string? ResourceType { get; set; }
         public string[]? PushToCookies { get; set; }
-        public Dictionary<dynamic, dynamic>? Meta { get; set; }
+        public object? Meta { get; set; }
         public Order(
             string actionType,
             string fromCookie,
             string? resourceType,
             string[]? pushToCookies,
-            Dictionary<dynamic, dynamic>? meta
+            object? meta
             )
         {
             this.ActionType = actionType;
