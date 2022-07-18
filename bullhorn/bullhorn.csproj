@@ -10,12 +10,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="AspNetCore.RouteAnalyzer" Version="0.5.3" />
+    <PackageReference Include="Docker.DotNet" Version="3.125.5" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
     <None Remove="Util\" />
     <None Remove="AspNetCore.RouteAnalyzer" />
+    <None Remove="Docker.DotNet" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
