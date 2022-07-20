@@ -19,17 +19,20 @@ public class SubscriptionController : ControllerBase
     public async void Register()
     {
 
-        _logger.LogInformation(Request.Path.Value);
         var deserializedBody = ExtendedSerializerExtensions.DeserializeBody<Order>(HttpContext.Request).Result;
 
         if (deserializedBody == null)
         {
             _logger.LogInformation("to_cookies is undefined. Exiting.");
+            await HttpContext.Response.WriteAsJsonAsync("Error: ToCookies is undefined");
             return;
         }
 
+        string[] sentNotifications = Array.Empty<string>();
         foreach (string cookie in deserializedBody.PushToCookies ) {
             if (_socketJar.ContainsKey(cookie))
+                _logger.LogInformation(cookie + " found. Writing fulfillment...");
+
             {
                 var webSocket = _socketJar[cookie];
                 var fulfillment = new Fulfillment(
@@ -45,11 +48,13 @@ public class SubscriptionController : ControllerBase
                     true,
                     CancellationToken.None);
 
-                _logger.LogInformation(_socketJar.ToString());
+                _logger.LogInformation(serializedFulfillment.ToString() + " sent to websocket.");
+                sentNotifications.Append(cookie);
             }
 
         };
-        await HttpContext.Response.WriteAsJsonAsync(_socketJar.Keys.First<string>().ToString());
+
+        await HttpContext.Response.WriteAsJsonAsync("Notifications sent to " + sentNotifications);
     }
 
     [HttpGet("/getregister")]
@@ -71,6 +76,7 @@ public class SubscriptionController : ControllerBase
         else
         {
             HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await HttpContext.Response.WriteAsJsonAsync("Error: Try again with a websocket request.");
         }
     }
 
@@ -80,31 +86,54 @@ public class SubscriptionController : ControllerBase
         System.Net.WebSockets.WebSocketReceiveResult? useReceiveResult;
         useReceiveResult = await webSocket.ReceiveAsync(
             new ArraySegment<byte>(buffer), CancellationToken.None);
+        var fromCookie = "";
         if (useReceiveResult != null && buffer != null)
         {
+
             var inputStream = new MemoryStream(buffer);
             var deserialized = ExtendedSerializerExtensions.DeserializeFromStream<Order>(inputStream);
-            var fromCookie = deserialized.FromCookie;
-            if (fromCookie != null && !_socketJar.ContainsKey(fromCookie))
+            fromCookie = deserialized.FromCookie;
+            if(fromCookie == null)
             {
+                _logger.LogInformation("FromCookie not in serialized object. Exiting.");
+                await HttpContext.Response.WriteAsJsonAsync("FromCookie not in serialized object.");
+                return;
+            }
+            if (!_socketJar.ContainsKey(fromCookie))
+            {
+                _logger.LogInformation("FromCookie " + fromCookie + " not found in cache. Caching now.");
                 _socketJar[fromCookie] = webSocket;
             }
-            _logger.LogInformation(deserialized.ToString());
-            _logger.LogInformation(_socketJar.Keys.First<string>().ToString());
             var useWebsocket = _socketJar[fromCookie];
+            _logger.LogInformation("FromCookie" + fromCookie + "found in cache.");
             useReceiveResult = await useWebsocket.ReceiveAsync(
             new ArraySegment<byte>(buffer), CancellationToken.None);
         }
-        _logger.LogInformation(_socketJar.Keys.First<string>());
         while (!useReceiveResult.CloseStatus.HasValue)
         {
 
         }
+        bool tryRemove = false;
+        if (fromCookie != null)
+        {
+            tryRemove = _socketJar.TryRemove(fromCookie, out webSocket);
+        }
+        if (tryRemove == true)
+        {
+            _logger.LogInformation("Uncached websocket:" + fromCookie);
+        } else
+        {
+            _logger.LogInformation("Failed to uncache websocket:" + fromCookie);
+
+        }
+        _logger.LogInformation("Closing websocket...");
 
         await webSocket.CloseAsync(
             useReceiveResult.CloseStatus.Value,
             useReceiveResult.CloseStatusDescription,
             CancellationToken.None);
+        _logger.LogInformation("Done closing websocket.");
+
     }
 }
 

@@ -11,6 +11,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="AspNetCore.RouteAnalyzer" Version="0.5.3" />
     <PackageReference Include="Docker.DotNet" Version="3.125.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +19,7 @@
     <None Remove="Util\" />
     <None Remove="AspNetCore.RouteAnalyzer" />
     <None Remove="Docker.DotNet" />
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
