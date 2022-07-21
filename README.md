@@ -43,3 +43,12 @@ Subsequent response schema:
     }
 }
 ```
+
+## As a local dev dependency
+### Running in Docker
+
+#### Setup
+1. `docker pull 14jthaxton/bullhorn:1.0` or `docker  build -t bullhorn .` in `Dockerfile`'s directory
+1. `docker run -d -p 0.0.0.0:5200:5200 -p 0.0.0.0:7254:7254 -e ASPNETCORE_URLS="http://0.0.0.0:5200" -it --name bullhorn bullhorn`
+
+

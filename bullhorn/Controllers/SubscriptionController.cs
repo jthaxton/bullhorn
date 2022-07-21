@@ -23,7 +23,7 @@ public class SubscriptionController : ControllerBase
 
         if (deserializedBody == null)
         {
-            _logger.LogInformation("to_cookies is undefined. Exiting.");
+            _logger.LogInformation("ToCookies is undefined. Exiting.");
             await HttpContext.Response.WriteAsJsonAsync("Error: ToCookies is undefined");
             return;
         }
@@ -48,7 +48,7 @@ public class SubscriptionController : ControllerBase
                     true,
                     CancellationToken.None);
 
-                _logger.LogInformation(serializedFulfillment.ToString() + " sent to websocket.");
+                _logger.LogInformation(serializedFulfillment + " sent to websocket.");
                 sentNotifications.Append(cookie);
             }
 
@@ -105,7 +105,7 @@ public class SubscriptionController : ControllerBase
                 _socketJar[fromCookie] = webSocket;
             }
             var useWebsocket = _socketJar[fromCookie];
-            _logger.LogInformation("FromCookie" + fromCookie + "found in cache.");
+            _logger.LogInformation("FromCookie " + fromCookie + " found in cache.");
             useReceiveResult = await useWebsocket.ReceiveAsync(
             new ArraySegment<byte>(buffer), CancellationToken.None);
         }

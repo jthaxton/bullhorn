@@ -7,6 +7,7 @@
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/bullhorn.pdb
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/AspNetCore.RouteAnalyzer.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Docker.DotNet.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.AspNetCore.JsonPatch.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.AspNetCore.Razor.Language.dll
@@ -18,12 +19,18 @@
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.CodeAnalysis.Razor.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.DotNet.PlatformAbstractions.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.Extensions.DependencyModel.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.IdentityModel.Logging.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.IdentityModel.Protocols.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.IdentityModel.Tokens.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Microsoft.OpenApi.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Newtonsoft.Json.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Newtonsoft.Json.Bson.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.Swagger.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/System.IdentityModel.Tokens.Jwt.dll
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/runtimes/linux-arm/native/libuv.so
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/runtimes/linux-arm64/native/libuv.so
 /Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/publish/runtimes/linux-armel/native/libuv.so

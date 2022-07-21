@@ -48,3 +48,10 @@
 /Users/joethaxton/Developer/bullhorn/bullhorn/obj/Release/net6.0/bullhorn.pdb
 /Users/joethaxton/Developer/bullhorn/bullhorn/obj/Release/net6.0/bullhorn.genruntimeconfig.cache
 /Users/joethaxton/Developer/bullhorn/bullhorn/obj/Release/net6.0/ref/bullhorn.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/Microsoft.IdentityModel.Logging.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/Microsoft.IdentityModel.Protocols.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/Microsoft.IdentityModel.Tokens.dll
+/Users/joethaxton/Developer/bullhorn/bullhorn/bin/Release/net6.0/System.IdentityModel.Tokens.Jwt.dll
