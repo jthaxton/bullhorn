@@ -1,5 +1,5 @@
 build:
   docker:
-    web: Dockerfile
+    web: ./bullhorn/Dockerfile
 run:
-  web: dotnet bullhorn.dll
+  web: dotnet ./bullhorn/bin/Release/bullhorn.dll
