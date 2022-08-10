@@ -2,6 +2,7 @@
 namespace bullhorn.Controllers;
 using bullhorn.Models;
 using System.Collections.Concurrent;
+using bullhorn.Util;
 
 [ApiController]
 [Route("[controller]")]
@@ -21,7 +22,7 @@ public class SubscriptionController : ControllerBase
 
         var deserializedBody = ExtendedSerializerExtensions.DeserializeBody<Order>(HttpContext.Request).Result;
 
-        if (deserializedBody == null)
+        if (Helpers.IsNull(deserializedBody))
         {
             _logger.LogInformation("ToCookies is undefined. Exiting.");
             await HttpContext.Response.WriteAsJsonAsync("Error: ToCookies is undefined");
@@ -29,15 +30,17 @@ public class SubscriptionController : ControllerBase
         }
 
         string[] sentNotifications = Array.Empty<string>();
-        foreach (string cookie in deserializedBody.PushToCookies ) {
+
+        foreach (string cookie in deserializedBody!.PushToCookies)
+        {
             if (_socketJar.ContainsKey(cookie))
                 _logger.LogInformation(cookie + " found. Writing fulfillment...");
 
             {
                 var webSocket = _socketJar[cookie];
                 var fulfillment = new Fulfillment(
-                    resourceType: deserializedBody.ResourceType,
-                    meta: deserializedBody.Meta.ToString()
+                    resourceType: deserializedBody!.ResourceType!.ToString(),
+                    meta: deserializedBody!.Meta!.ToString()
                 );
 
                 var serializedFulfillment = ExtendedSerializerExtensions.Serialize(fulfillment);
@@ -55,13 +58,6 @@ public class SubscriptionController : ControllerBase
         };
 
         await HttpContext.Response.WriteAsJsonAsync("Notifications sent to " + sentNotifications);
-    }
-
-    [HttpGet("/getregister")]
-    public async Task? GetRegister()
-    {
-        var sub = new Order(actionType: "subscribe", fromCookie: "c00k!3", resourceType: null, pushToCookies: null, meta: null);
-        await HttpContext.Response.WriteAsJsonAsync(sub);
     }
 
 
@@ -122,7 +118,7 @@ public class SubscriptionController : ControllerBase
                 return;
             }
         }
-        while (!useReceiveResult.CloseStatus.HasValue)
+        while (!useReceiveResult!.CloseStatus.HasValue)
         {
 
         }
@@ -141,7 +137,7 @@ public class SubscriptionController : ControllerBase
         }
         _logger.LogInformation("Closing websocket...");
 
-        await webSocket.CloseAsync(
+        await webSocket!.CloseAsync(
             useReceiveResult.CloseStatus.Value,
             useReceiveResult.CloseStatusDescription,
             CancellationToken.None);
