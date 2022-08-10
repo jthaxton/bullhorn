@@ -38,6 +38,11 @@ public class SubscriptionController : ControllerBase
 
             {
                 var webSocket = _socketJar[cookie];
+                if (!webSocket.State.Equals(System.Net.WebSockets.WebSocketState.Open))
+                {
+                    _logger.LogInformation("Client websocket is unable to receive messages");
+                    return;
+                }
                 var fulfillment = new Fulfillment(
                     resourceType: deserializedBody!.ResourceType!.ToString(),
                     meta: deserializedBody!.Meta!.ToString()
@@ -127,7 +132,7 @@ public class SubscriptionController : ControllerBase
         {
             tryRemove = _socketJar.TryRemove(fromCookie, out webSocket);
         }
-        if (tryRemove == true)
+        if (tryRemove)
         {
             _logger.LogInformation("Uncached websocket:" + fromCookie);
         } else
