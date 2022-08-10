@@ -1,18 +1,21 @@
 ﻿<Properties StartupConfiguration="{F7F24C42-9CF5-471D-B240-77A7A51E0C3C}|Default">
   <MonoDevelop.Ide.ItemProperties.bullhorn PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="bullhorn/Controllers/SubscriptionController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="bullhorn/Dockerfile">
     <Files>
-      <File FileName="bullhorn/Controllers/SubscriptionController.cs" Line="10" Column="29" NotebookId="1" />
-      <File FileName="bullhorn/Program.cs" Line="26" Column="24" NotebookId="1" />
-      <File FileName="bullhorn/Util/ExtendedSerializerExtensions.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="bullhorn/Models/Order.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="bullhorn/Dockerfile" Line="20" Column="36" NotebookId="1" />
+      <File FileName="bullhorn/Controllers/SubscriptionController.cs" Line="28" Column="20" />
+      <File FileName="bullhorn/Program.cs" Line="38" Column="1" />
+      <File FileName="bullhorn/Util/ExtendedSerializerExtensions.cs" Line="1" Column="1" />
+      <File FileName="bullhorn/Models/Order.cs" Line="1" Column="1" />
+      <File FileName="bullhorn/Dockerfile" Line="16" Column="13" />
+      <File FileName="bullhorn/appsettings.json" Line="1" Column="1" />
+      <File FileName="bullhorn/appsettings.Development.json" Line="1" Column="1" />
+      <File FileName="bullhorn/Properties/launchSettings.json" Line="1" Column="1" />
+      <File FileName="bullhorn/.env" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,6 +24,7 @@
             <Node name="bullhorn" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="Properties" expanded="True" />
+              <Node name="Util" expanded="True" />
               <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>
@@ -31,4 +35,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
