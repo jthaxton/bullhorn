@@ -111,8 +111,16 @@ public class SubscriptionController : ControllerBase
                 _logger.LogInformation("Websocket not found. Exiting;");
                 return;
             }
+            try
+            {
+
             useReceiveResult = await useWebsocket.ReceiveAsync(
             new ArraySegment<byte>(buffer), CancellationToken.None);
+            } catch(Exception e)
+            {
+                _logger.LogInformation(e.ToString());
+                return;
+            }
         }
         while (!useReceiveResult.CloseStatus.HasValue)
         {
