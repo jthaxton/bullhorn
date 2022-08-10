@@ -106,6 +106,11 @@ public class SubscriptionController : ControllerBase
             }
             var useWebsocket = _socketJar[fromCookie];
             _logger.LogInformation("FromCookie " + fromCookie + " found in cache.");
+            if (useWebsocket == null)
+            {
+                _logger.LogInformation("Websocket not found. Exiting;");
+                return;
+            }
             useReceiveResult = await useWebsocket.ReceiveAsync(
             new ArraySegment<byte>(buffer), CancellationToken.None);
         }
